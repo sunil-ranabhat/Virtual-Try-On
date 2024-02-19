@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhancing Customer Experience: The Future of Online Clothing Try-On</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block css %}
+    {% endblock %}
+    <style>
+
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover; /* or contain, depending on your preference */
+            background-repeat: no-repeat;
+            background-position: center -80px;
+            height: 100%; /* Set the body height to 100% to make sure the container covers the entire viewport */
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            height: 100%; /* Set container height to cover the entire viewport */
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding-bottom: 50px; /* Add padding bottom to avoid the footer overlapping content */
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 20px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Try-On</h1>
+            <nav class="menu">
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="#">SERVICE</a></li>
+                    <li><a href="#">DESIGN</a></li>
+                    <li><a href="#">CONTACT</a></li>
+        
+                    {% if request.user.is_authenticated %}
+                    <li><a href="#">PROFILE</a></li>
+                    <li><a href="{% url 'logout_view' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+                        <a class="btn btn-primary" href="{% url 'login_view' %}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <!-- Add your main content here -->
+        {% block start %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    {% block js %}
+        {% endblock %}
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#image-placeholder {
+    height: 200px; /* Adjust as needed */
+    background-color: #eee;
+    text-align: center;
+    line-height: 200px;
+    font-style: italic;
+}
+
+</style>
+
+        {% endblock %}
+
+{% block start %}
+<div class="container">
+    <form id="image-upload-form" class="form" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Upload Image</h2>
+        <input type="file" id="image-upload" accept="image/*" required name="cloth-image">
+        <button  type="submit">Submit</button>
+         </form>
+        
+</div>
+        {% endblock %}
+
+        {% block js %}
+        <script>
+           const imageUpload = document.getElementById('image-upload');
+const imagePlaceholder = document.getElementById('image-placeholder');
+
+imageUpload.addEventListener('change', (event) => {
+  // Hide image placeholder initially
+  imagePlaceholder.style.display = "none";
+
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    const image = new Image();
+    image.src = event.target.result;
+    image.onload = function() {
+      // Check if image dimensions are suitable
+      if (image.width > 500 || image.height > 500) {
+        // Handle large images (e.g., resize or display error message)
+        return;
+      }
+
+      // Create an appropriate image element with src set to dataURL
+      const uploadedImage = document.createElement('img');
+      uploadedImage.src = event.target.result;
+      uploadedImage.alt = "Uploaded Image";
+
+      // Replace placeholder with uploaded image
+      imagePlaceholder.parentNode.replaceChild(uploadedImage, imagePlaceholder);
+    };
+  };
+
+  reader.onerror = (error) => {
+    // Handle errors during image reading
+    console.error("Error reading image:", error);
+  };
+
+  reader.readAsDataURL(file);
+});
+
+
+        </script>
+        {% endblock %}
